@@ -1,12 +1,12 @@
 workflows:
-    react-native-android:
+    android-workflow-id:
     # ....
     environment:
       groups:
         # ...
       vars:
         PACKAGE_NAME: "io.codemagic.sample.reactnative"
-    react-native-ios:
+    ios-workflow-id:
     # ....
     environment:
       groups:
