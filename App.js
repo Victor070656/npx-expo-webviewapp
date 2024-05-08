@@ -37,7 +37,7 @@ export default function App() {
           ref={ref}
           style={{ flex: 1 }}
           originWhitelist={["*"]}
-          source={{ uri: "http://192.168.0.167/royal-educity" }}
+          source={{ uri: "https://multifinanceapp.22web.org" }}
           onNavigationStateChange={(navState) => {
             console.log(navState.url);
             ref.current.canGoBack = navState.canGoBack;
