@@ -5,11 +5,12 @@ import {
   Text,
   View,
   BackHandler,
+  Button,
 } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function App() {
   const ref = useRef(null);
@@ -29,34 +30,74 @@ export default function App() {
     return () => backHandler.remove();
     // cleanup listener on component unmount
   }, []);
+
+  const [networkError, setNetworkError] = useState(false);
+
+  const onError = (event) => {
+    setNetworkError(true);
+  };
+
+  const onRefresh = () => {
+    setNetworkError(false);
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView forceInset={{ top: "always" }} style={styles.container}>
         <StatusBar style="light" />
-        <WebView
-          ref={ref}
-          style={{ flex: 1 }}
-          originWhitelist={["*"]}
-          source={{ uri: "https://multifinanceapp.22web.org" }}
-          onNavigationStateChange={(navState) => {
-            console.log(navState.url);
-            ref.current.canGoBack = navState.canGoBack;
-          }}
-          startInLoadingState={() => (
-            <View style={{ flex: 1, backgroundColor: "#140342" }}>
-              <ActivityIndicator size={"large"} color={"#fff"} />
-            </View>
-          )}
-          javaScriptEnabled={true}
-        />
+        {networkError ? (
+          <NetworkErrorScreen onRefresh={onRefresh} />
+        ) : (
+          <WebView
+            ref={ref}
+            style={{ flex: 1 }}
+            originWhitelist={["*"]}
+            source={{ uri: "https://multifinanceapp.22web.org" }}
+            onError={onError}
+            onNavigationStateChange={(navState) => {
+              console.log(navState.url);
+              ref.current.canGoBack = navState.canGoBack;
+            }}
+            startInLoadingState={() => (
+              <View style={{ flex: 1 }}>
+                <ActivityIndicator size={"large"} color={"#00f"} />
+              </View>
+            )}
+            javaScriptEnabled={true}
+          />
+        )}
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
 
+const NetworkErrorScreen = ({ onRefresh }) => {
+  return (
+    <View style={styles.ocontainer}>
+      <Text style={[styles.text, { fontSize: 20 }]}>Network Error!</Text>
+      <Text style={[styles.text, { marginBottom: 10 }]}>
+        Please check your internet connection and try again.
+      </Text>
+      <Button title="Refresh" onPress={onRefresh} />
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#140342",
+  },
+  ocontainer: {
+    flex: 1,
+    backgroundColor: "#140342",
+    alignItems: "center",
+    justifyContent: "center",
+    rowGap: 10,
+  },
+  text: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "800",
   },
 });

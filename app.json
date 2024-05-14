@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "npx-expo",
-    "slug": "npx-expo",
+    "name": "Royal Educity",
+    "slug": "royal-educity",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#140342"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -18,13 +18,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icon2.png",
+        "backgroundColor": "#140342"
       },
-      "package": "io.codemagic.sample.reactnative"
+      "package": "io.codemagic.sample.reactnative",
+      "usesCleartextTraffic": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
+    
   }
 }
